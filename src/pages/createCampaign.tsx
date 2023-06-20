@@ -1,10 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
-import Head from "next/head";
 import { ethers } from "ethers";
 import styles from "../../styles/Home.module.css";
 import React, { useEffect, useState } from "react";
-import Web3 from "web3";
 import Modal from "react-modal";
 import { useRouter } from "next/router";
 
@@ -110,8 +106,8 @@ export default function Home() {
           signer
         );
 
-        //create campaign
-        // call  createCampaign function from the contract
+        // create campaign
+        // (6) call  createCampaign function from the contract
         let { hash } = await campaignManagerContractInstance.createCampaign(
           title,
           description,
@@ -122,13 +118,13 @@ export default function Home() {
           }
         );
 
-        //wait for transaction to be mined
+        // (7) wait for transaction to be mined
         await provider.waitForTransaction(hash);
 
         //close modal
         closeModal();
 
-        //display alert message
+        // (8) display alert message
         alert(`Transaction sent! Hash: ${hash}`);
 
         //clear fields

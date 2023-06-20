@@ -73,25 +73,24 @@ export default function Home() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
 
-      //(1)Create Campaign Manager contract instance
+      //(1) Create Campaign Manager contract instance
       const campaignManagerContractInstance = new ethers.Contract(
         campaignManagerContractAddress as string,
         campaignManagerABI,
         signer
       );
-
       //(2) call getCampaigns function to get all the campaign contract addresses
       const allCampaignAddresses =
         await campaignManagerContractInstance.getCampaigns();
-
       //(3) call getCampaignData function to get all detailed data of each campaign
       const allCampaignData =
         await campaignManagerContractInstance.getCampaignData(
           allCampaignAddresses
         );
-
       // declare new array
       let new_campaign = [];
+
+      // (4) iterate the array and add it into the state variable for display
       for (let i = 0; i < allCampaignData.description.length; i++) {
         let title: string = allCampaignData.title[i];
         let description: string = allCampaignData.description[i];
@@ -131,7 +130,7 @@ export default function Home() {
         new_campaign.push(newItem);
       }
 
-      //(4) set accounts items to state variable
+      // (5) set accounts items to state variable
       setCampaigns(new_campaign);
     }
   }
