@@ -74,64 +74,17 @@ export default function Home() {
       const signer = provider.getSigner();
 
       //(1) Create Campaign Manager contract instance
-      const campaignManagerContractInstance = new ethers.Contract(
-        campaignManagerContractAddress as string,
-        campaignManagerABI,
-        signer
-      );
+
       //(2) call getCampaigns function to get all the campaign contract addresses
-      const allCampaignAddresses =
-        await campaignManagerContractInstance.getCampaigns();
+
       //(3) call getCampaignData function to get all detailed data of each campaign
-      const allCampaignData =
-        await campaignManagerContractInstance.getCampaignData(
-          allCampaignAddresses
-        );
+
       // declare new array
       let new_campaign = [];
 
       // (4) iterate the array and add it into the state variable for display
-      for (let i = 0; i < allCampaignData.description.length; i++) {
-        let title: string = allCampaignData.title[i];
-        let description: string = allCampaignData.description[i];
-        let campaignSCAddress: string = allCampaignAddresses[i];
-        let targetAmount: string = allCampaignData.targetAmount[i];
-        let currentAmount: string = allCampaignData.currentAmount[i];
-        let deadline: string = allCampaignData.deadline[i];
-        let userContribution: string = allCampaignData.userContribution[i];
-        let status: string = allCampaignData.status[i];
-        let proposer: string = allCampaignData.proposer[i];
-
-        const decimalEpochTime = parseInt(deadline, 16); // Convert hex to number
-        const hexValue = decimalEpochTime.toString(16); // Convert to hexadecimal
-
-        const unixTimestamp = parseInt(hexValue) * 1000; // Convert to milliseconds
-        const deadlineDate = new Date(unixTimestamp);
-        // const readableFormat = date.toString();
-
-        const currentTime = new Date();
-        const differenceInMinutes = Math.floor(
-          (deadlineDate.getTime() - currentTime.getTime()) / (1000 * 60) //deadline time left in minutes
-        );
-
-        let newItem: Campaign = {
-          title,
-          description,
-          campaignSCAddress,
-          targetAmount: parseFloat(ethers.utils.formatUnits(targetAmount, 6)),
-          currentAmount: parseFloat(ethers.utils.formatUnits(currentAmount, 6)),
-          deadline: differenceInMinutes,
-          userContribution: parseFloat(
-            ethers.utils.formatUnits(userContribution, 6)
-          ),
-          status,
-          campaignCreator: proposer,
-        };
-        new_campaign.push(newItem);
-      }
 
       // (5) set accounts items to state variable
-      setCampaigns(new_campaign);
     }
   }
 

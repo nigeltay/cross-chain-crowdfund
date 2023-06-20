@@ -396,26 +396,10 @@ export default function Home() {
         const signer = provider.getSigner();
 
         // (9) create USDC contract instance
-        const usdcContractInstance = new ethers.Contract(
-          usdcContractAddress,
-          usdcABI,
-          signer
-        );
 
         // (10) call approve function from the usdc contract
-        const approveUsdcTxn = await usdcContractInstance.approve(
-          campaignContractAddress,
-          ethers.utils.parseUnits(USDCAmount, 6),
-          {
-            gasLimit: 1200000,
-          }
-        );
 
         // (11) wait for the transction to be mined
-        await approveUsdcTxn.wait();
-        if (depositByCCTP == false) {
-          alert(`Transaction sent! Hash: ${approveUsdcTxn.hash}`);
-        }
 
         setLoadedData("Deposit funds...please wait");
 
@@ -426,16 +410,8 @@ export default function Home() {
         );
 
         // (12) call deposit function from the smart contract
-        let { hash } = await campaignManagerContractInstance.deposit(
-          ethers.utils.parseUnits(USDCAmount, 6),
-          campaignContractAddress,
-          {
-            gasLimit: 1200000,
-          }
-        );
 
         // (13) wait for transaction to be mined
-        await provider.waitForTransaction(hash);
 
         if (depositByCCTP == false) {
           alert(`Transaction sent! Hash: ${hash}`);

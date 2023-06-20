@@ -108,24 +108,13 @@ export default function Home() {
 
         // create campaign
         // (6) call  createCampaign function from the contract
-        let { hash } = await campaignManagerContractInstance.createCampaign(
-          title,
-          description,
-          ethers.utils.parseUnits(targetAmount.toString(), 6),
-          formattedHexTimestamp,
-          {
-            gasLimit: 1200000,
-          }
-        );
 
         // (7) wait for transaction to be mined
-        await provider.waitForTransaction(hash);
 
         //close modal
         closeModal();
 
         // (8) display alert message
-        alert(`Transaction sent! Hash: ${hash}`);
 
         //clear fields
         setTitle("");
