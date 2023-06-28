@@ -84,7 +84,7 @@ export default function Home() {
 
       // (4) iterate the array and add it into the state variable for display
 
-      // (5) set accounts items to state variable
+      // (5) set campaigns items to state variable
     }
   }
 
